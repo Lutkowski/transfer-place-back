@@ -5,5 +5,6 @@ import { CarClassEntity } from './postgres/entities/car-class.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CarEntity, CarClassEntity])],
+  exports: [TypeOrmModule],
 })
 export class InfrastructureModule {}
