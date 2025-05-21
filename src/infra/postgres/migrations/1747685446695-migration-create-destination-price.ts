@@ -39,10 +39,11 @@ export class MigrationCreateDestinationPrice1747685446695
 
     await queryRunner.query(`
             INSERT INTO "destinations" ("name") VALUES 
-            ('AIRPORT'),
-            ('RAILWAY_STATION'),
-            ('ADDRESS'),
-            ('RENT');
+            ('Трансфер Аэропорт'),
+            ('Трансфер ЖД Вокзал'),
+            ('С адреса на адрес'),
+            ('Аренда с водителем'),
+            ('Междугородние поездки');
         `);
 
     await queryRunner.query(`
