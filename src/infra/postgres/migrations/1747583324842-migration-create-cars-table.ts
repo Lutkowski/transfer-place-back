@@ -29,10 +29,10 @@ export class MigrationCreateCarsTable1747583324842
 
     await queryRunner.query(`
             INSERT INTO "car_classes" ("name") VALUES 
-            ('STANDARD'), 
-            ('COMFORT'), 
-            ('BUSINESS'), 
-            ('MINIVAN');
+            ('Стандарт'), 
+            ('Комфорт'), 
+            ('Бизнес'), 
+            ('Минивэн');
         `);
 
     await queryRunner.query(`

@@ -1,6 +1,6 @@
 export enum CarClass {
-  STANDARD = 'STANDARD',
-  COMFORT = 'COMFORT',
-  BUSINESS = 'BUSINESS',
-  MINIVAN = 'MINIVAN',
+  STANDARD = 'Стандарт',
+  COMFORT = 'Комфорт',
+  BUSINESS = 'Бизнес',
+  MINIVAN = 'Минивэн',
 }

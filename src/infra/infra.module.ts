@@ -4,6 +4,7 @@ import { CarEntity } from './postgres/entities/car.entity';
 import { CarClassEntity } from './postgres/entities/car-class.entity';
 import { CarClassPriceEntity } from './postgres/entities/car-class-price.entity';
 import { DestinationEntity } from './postgres/entities/destination.entity';
+import { FeedbackEntity } from './postgres/entities/feedback.entity';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { DestinationEntity } from './postgres/entities/destination.entity';
       CarClassEntity,
       CarClassPriceEntity,
       DestinationEntity,
+      FeedbackEntity,
     ]),
   ],
   exports: [TypeOrmModule],
