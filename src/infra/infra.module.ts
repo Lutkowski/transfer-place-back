@@ -7,6 +7,7 @@ import { DestinationEntity } from './postgres/entities/destination.entity';
 import { FeedbackEntity } from './postgres/entities/feedback.entity';
 import { UserEntity } from './postgres/entities/user.entity';
 import { SmsCodeEntity } from './postgres/entities/sms-code.entity';
+import { OrderEntity } from './postgres/entities/order.entity';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { SmsCodeEntity } from './postgres/entities/sms-code.entity';
       FeedbackEntity,
       UserEntity,
       SmsCodeEntity,
+      OrderEntity,
     ]),
   ],
   exports: [TypeOrmModule],

@@ -19,7 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js -d src/infra/postgres/config/typeorm.config.ts",
-    "migration:generate": "npm run typeorm -- migration:generate src/infra/postgres/migrations/migration-${name}",
+    "migration:generate": "npm run typeorm -- migration:generate src/infra/postgres/migrations/migration-create-order",
     "migration:run": "npm run typeorm -- migration:run",
     "migration:revert": "npm run typeorm -- migration:revert",
     "prepare": "husky install"

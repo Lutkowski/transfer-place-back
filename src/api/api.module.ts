@@ -7,6 +7,7 @@ import { FeedbackController } from './controllers/feedback.controller';
 import { AuthController } from './controllers/auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from '../infra/postgres/entities/user.entity';
+import { OrderController } from './controllers/order.controller';
 
 @Module({
   imports: [CoreModule, TypeOrmModule.forFeature([UserEntity]), CoreModule],
@@ -16,6 +17,7 @@ import { UserEntity } from '../infra/postgres/entities/user.entity';
     PriceController,
     FeedbackController,
     AuthController,
+    OrderController,
   ],
 })
 export class ApiModule {}
