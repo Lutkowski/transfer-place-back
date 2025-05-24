@@ -1,10 +1,16 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SmsService } from './sms.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../../infra/postgres/entities/user.entity';
 import { SmsCodeEntity } from '../../infra/postgres/entities/sms-code.entity';
+import { AdminLoginDto } from '../../shared/dto/admin-login.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -45,6 +51,33 @@ export class AuthService {
     if (!user) {
       user = this.userRepo.create({ phone, isAdmin: false });
       await this.userRepo.save(user);
+    }
+
+    const payload = {
+      id: user.id,
+      phone: user.phone,
+      name: user.name,
+      isAdmin: user.isAdmin,
+    };
+    const access_token = await this.jwtService.signAsync(payload);
+
+    return { access_token };
+  }
+
+  async loginByEmail(dto: AdminLoginDto): Promise<{ access_token: string }> {
+    const user = await this.userRepo.findOneBy({ email: dto.email });
+
+    if (!user) {
+      throw new UnauthorizedException('Неверный email или нет доступа');
+    }
+
+    if (!user.isAdmin) {
+      throw new ForbiddenException('Нет доступа админа');
+    }
+
+    const isMatch = await bcrypt.compare(dto.password, user.password as string);
+    if (!isMatch) {
+      throw new UnauthorizedException('Неверный пароль');
     }
 
     const payload = {
