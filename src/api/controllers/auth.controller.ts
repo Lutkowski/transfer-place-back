@@ -4,6 +4,7 @@ import { VerifyCodeDto } from '../../shared/dto/verify-code.dto';
 import { AuthService } from '../../core/services/auth.service';
 import { JwtAuthGuard } from '../../core/guards/jwt-auth.guard';
 import { AuthenticatedRequest } from '../../shared/types/user.interface';
+import { AdminLoginDto } from '../../shared/dto/admin-login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -17,6 +18,11 @@ export class AuthController {
   @Post('verify-code')
   verifyCode(@Body() dto: VerifyCodeDto) {
     return this.authService.verifyCode(dto.phone, dto.code);
+  }
+
+  @Post('admin/login')
+  adminLogin(@Body() dto: AdminLoginDto) {
+    return this.authService.loginByEmail(dto);
   }
 
   @UseGuards(JwtAuthGuard)
