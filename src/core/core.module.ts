@@ -11,6 +11,7 @@ import { UserEntity } from '../infra/postgres/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './services/auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { OrderService } from './services/order.service';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     SmsService,
     AuthService,
     JwtStrategy,
+    OrderService,
   ],
   exports: [
     CarsService,
@@ -43,6 +45,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     AuthService,
     JwtModule,
     JwtStrategy,
+    OrderService,
   ],
 })
 export class CoreModule {}

@@ -1,6 +1,12 @@
 import { Request } from 'express';
-import { UserEntity } from '../../infra/postgres/entities/user.entity';
 
 export interface AuthenticatedRequest extends Request {
-  user: Pick<UserEntity, 'id' | 'name' | 'phone' | 'isAdmin'>;
+  user: {
+    id: number;
+    phone: string;
+    name: string | null;
+    isAdmin: boolean;
+    iat: number;
+    exp: number;
+  };
 }
