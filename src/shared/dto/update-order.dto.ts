@@ -1,21 +1,23 @@
-import { TransferType } from '../enums/transfer-type.enum';
 import {
   IsBoolean,
+  IsDateString,
   IsEnum,
   IsInt,
   IsOptional,
   IsString,
-  IsDateString,
   Matches,
 } from 'class-validator';
+import { TransferType } from '../enums/transfer-type.enum';
 import { CarClass } from '../enums/car-class.enum';
 
-export class CreateOrderDto {
+export class UpdateOrderDto {
+  @IsOptional()
   @IsEnum(CarClass)
-  carClass: CarClass;
+  carClass?: CarClass;
 
+  @IsOptional()
   @IsEnum(TransferType)
-  transferType: TransferType;
+  transferType?: TransferType;
 
   @IsOptional()
   @IsBoolean()
@@ -49,14 +51,7 @@ export class CreateOrderDto {
   @IsString()
   comment?: string;
 
-  @IsString()
-  name: string;
-
   @IsOptional()
   @IsString()
-  phone?: string;
-
-  @IsOptional()
-  @IsInt()
-  price?: number;
+  name?: string;
 }
