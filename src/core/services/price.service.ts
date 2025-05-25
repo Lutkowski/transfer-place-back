@@ -67,4 +67,27 @@ export class PriceService {
 
     return { price: total };
   }
+
+  async getAllPrices() {
+    const prices = await this.priceRepo.find({
+      relations: ['carClass', 'destination'],
+      order: {
+        carClass: { id: 'ASC' },
+        destination: { id: 'ASC' },
+      },
+    });
+
+    return prices.map((p) => ({
+      id: p.id,
+      price: p.price,
+      carClass: {
+        id: p.carClass.id,
+        name: p.carClass.name,
+      },
+      destination: {
+        id: p.destination.id,
+        name: p.destination.name,
+      },
+    }));
+  }
 }

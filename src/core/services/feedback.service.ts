@@ -15,4 +15,10 @@ export class FeedbackService {
     const feedback = this.feedbackRepository.create(dto);
     return this.feedbackRepository.save(feedback);
   }
+
+  async getAll() {
+    return this.feedbackRepository.find({
+      order: { createdAt: 'DESC' },
+    });
+  }
 }
