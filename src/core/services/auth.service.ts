@@ -25,7 +25,7 @@ export class AuthService {
 
   async requestCode(phone: string): Promise<void> {
     const code = Math.floor(1000 + Math.random() * 9000).toString();
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
+    const expiresAt = new Date(Date.now() + 1440 * 60 * 1000);
 
     await this.codeRepo.delete({ phone });
 

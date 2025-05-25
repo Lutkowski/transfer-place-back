@@ -1,4 +1,3 @@
-import { CarClassEntity } from './car-class.entity';
 import {
   Column,
   CreateDateColumn,
@@ -7,9 +6,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserEntity } from './user.entity';
-import { DestinationEntity } from './destination.entity';
 import { OrderStatus } from '../../../shared/enums/order-status.enum';
+import { UserEntity } from './user.entity';
+import { CarClassEntity } from './car-class.entity';
+import { DestinationEntity } from './destination.entity';
 
 @Entity('orders')
 export class OrderEntity {
@@ -28,9 +28,6 @@ export class OrderEntity {
   @JoinColumn({ name: 'destination_id' })
   destination: DestinationEntity;
 
-  @Column({ nullable: true })
-  comment?: string;
-
   @Column({ type: 'boolean', default: false })
   withChild: boolean;
 
@@ -40,8 +37,32 @@ export class OrderEntity {
   @Column({ type: 'int', nullable: true })
   hoursQuantity?: number;
 
+  @Column({ nullable: true })
+  pickupLocation?: string;
+
+  @Column({ nullable: true })
+  dropoffLocation?: string;
+
+  @Column({ type: 'date', nullable: true })
+  pickupDate?: string;
+
+  @Column({ type: 'time', nullable: true })
+  pickupTime?: string;
+
+  @Column({ nullable: true })
+  comment?: string;
+
+  @Column()
+  name: string;
+
+  @Column({ nullable: true })
+  phone?: string;
+
   @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.NEW })
   status: OrderStatus;
+
+  @Column({ type: 'int', nullable: true })
+  price?: number;
 
   @CreateDateColumn()
   createdAt: Date;
