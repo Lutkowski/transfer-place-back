@@ -39,4 +39,9 @@ export class CarsController {
   async deleteCar(@Param('id') id: string) {
     return this.carsService.deleteCar(+id);
   }
+
+  @Get('excel')
+  async exportCarsToExcel(): Promise<{ url: string }> {
+    return this.carsService.exportCarsToExcel();
+  }
 }

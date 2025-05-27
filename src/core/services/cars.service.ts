@@ -5,12 +5,15 @@ import { Repository } from 'typeorm';
 import { CreateCarDto } from '../../shared/dto/create-car.dto';
 import { GetCarDto } from '../../shared/dto/get-car.dto';
 import { UpdateCarDto } from '../../shared/dto/update-car,dto';
+import { MinioService } from './minio.service.';
+import * as ExcelJS from 'exceljs';
 
 @Injectable()
 export class CarsService {
   constructor(
     @InjectRepository(CarEntity)
     private readonly carRepository: Repository<CarEntity>,
+    private readonly minioService: MinioService,
   ) {}
 
   async createCar(dto: CreateCarDto): Promise<CarEntity> {
@@ -51,5 +54,44 @@ export class CarsService {
       throw new NotFoundException('Машина не найдена');
     }
     return { message: 'Машина успешно удалена' };
+  }
+
+  async exportCarsToExcel(): Promise<{ url: string }> {
+    const cars = await this.carRepository.find({ relations: ['carClass'] });
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Cars');
+
+    worksheet.columns = [
+      { header: 'ID', key: 'id', width: 10 },
+      { header: 'Название', key: 'title', width: 30 },
+      { header: 'Мест', key: 'placeNumber', width: 10 },
+      { header: 'Класс', key: 'carClass', width: 20 },
+      { header: 'Картинка (src)', key: 'imgSrc', width: 40 },
+      { header: 'Alt', key: 'imgAlt', width: 30 },
+    ];
+
+    cars.forEach((car) => {
+      worksheet.addRow({
+        id: car.id,
+        title: car.title,
+        placeNumber: car.placeNumber,
+        carClass: car.carClass?.name,
+        imgSrc: car.imgSrc,
+        imgAlt: car.imgAlt,
+      });
+    });
+
+    const buffer = await workbook.xlsx.writeBuffer();
+
+    const filename = `cars.xlsx`;
+
+    const fakeFile = {
+      originalname: filename,
+      buffer: buffer,
+    } as Express.Multer.File;
+
+    const url = `http://localhost:9000/cars-images/${await this.minioService.uploadFile('cars-images', fakeFile)}`;
+    return { url };
   }
 }
